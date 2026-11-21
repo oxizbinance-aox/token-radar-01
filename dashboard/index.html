@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — Pre-token Protocol Launch Radar</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="radar-dot" aria-hidden="true"></span>
+    <div>
+      <h1>TOKEN RADAR</h1>
+      <p class="tagline">Which pre-token protocols are worth a launch — and how to farm them.</p>
+    </div>
+  </div>
+  <div class="top-meta">
+    <span class="badge">Sealed snapshot · 14 Nov 2026</span>
+    <span class="badge">758 protocols</span>
+    <span class="badge badge-pink">make.fun · token-radar-01</span>
+  </div>
+</header>
+
+<main>
+  <section class="stats" id="stats" aria-label="Summary"></section>
+
+  <section class="controls" aria-label="Filters">
+    <input id="search" type="search" placeholder="Search a protocol…" autocomplete="off">
+    <select id="category" aria-label="Category"></select>
+    <select id="sort" aria-label="Sort by">
+      <option value="implied_value_usd">Sort · Implied launch value</option>
+      <option value="tvl_usd">Sort · TVL</option>
+      <option value="farmability">Sort · Farmability</option>
+    </select>
+    <label class="check"><input id="farmableOnly" type="checkbox"> Farmable only (score ≥ 70)</label>
+    <label class="check"><input id="top10Only" type="checkbox"> Top 10 only</label>
+  </section>
+
+  <section class="layout">
+    <div class="board-wrap">
+      <div class="board-head">
+        <span>#</span><span>Protocol</span><span>TVL</span><span>Multiple</span><span>Implied value</span><span>Farm</span>
+      </div>
+      <div id="board" class="board" role="list"></div>
+      <p id="empty" class="empty" hidden>No protocol matches these filters.</p>
+    </div>
+
+    <aside class="detail" id="detail" aria-label="Protocol detail"></aside>
+  </section>
+
+  <section class="live" aria-label="Live tokens">
+    <h2>What the market already pays — the comps</h2>
+    <p class="live-sub">The multiples above come from these protocols: they already trade, so their market cap over TVL is the market's own price for a token in each category.</p>
+    <div id="live" class="live-table"></div>
+  </section>
+
+  <section class="method" aria-label="Methodology">
+    <h2>How the ranking works</h2>
+    <div class="method-grid">
+      <div>
+        <h3>1 · Find the protocols that record no token</h3>
+        <p>Every protocol in the sealed snapshot is checked. A protocol counts as pre-token only if it records no token — no market cap, no CoinGecko id, no symbol — and is not a wrapped, staked or bridged product of a token that trades, not an exchange, and not a versioned pool. The snapshot's 40-protocol watchlist is the floor; the board adds every rankable protocol below it.</p>
+      </div>
+      <div>
+        <h3>2 · Price the launch from the market's own comps</h3>
+        <p><strong>Implied value = TVL × category multiple × 2.0 × P(launch) × growth × maturity.</strong> The multiple is the median market-cap / TVL of the snapshot's own live-token protocols in the same category (categories with fewer than 3 comps use the global median). The 2.0× is the FDV uplift: a launch's fully-diluted value runs about twice its circulating market cap.</p>
+      </div>
+      <div>
+        <h3>3 · Weight by launch probability</h3>
+        <p><strong>P(launch) runs 0.30–0.85 by category.</strong> Retail protocols — prediction markets, DEXes, lending — are far more likely to launch a token than institutional vault curators, so each category carries its own probability. The board ranks by implied value — the honest answer to “what is this launch worth?”</p>
+      </div>
+      <div>
+        <h3>4 · Score farmability</h3>
+        <p>Each protocol gets a 0–100 farmability score: how easy and cheap it is for a real user to farm (chain count, growth, category). The farm steps in the detail panel are the standard on-chain actions for that category, customised with the protocol's own chains and TVL.</p>
+      </div>
+    </div>
+    <p class="fineprint" id="fineprint"></p>
+  </section>
+</main>
+
+<footer>
+  <p>Token Radar · Built for the make.fun bounty <strong>token-radar-01</strong>. Data: sealed DefiLlama snapshot, 14 Nov 2026. Not financial advice — do your own research, never farm with money you cannot lose.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
